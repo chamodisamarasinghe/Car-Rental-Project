@@ -1,4 +1,4 @@
 package lk.ijse.spring.entity;
 
-public class BookingDetail {
+public class BookingDetails {
 }
