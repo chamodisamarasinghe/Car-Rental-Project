@@ -7,7 +7,7 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Data // apply getters and setters
+@Data
 @ToString
 public class CustomerDTO {
     private String NIC;
