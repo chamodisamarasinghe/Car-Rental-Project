@@ -27,12 +27,57 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public CustomerDTO searchCustomer(String NIC) {
+    public CustomerDTO searchCustomer(String id) {
         return null;
     }
 
     @Override
     public List<CustomerDTO> getAllCustomers() {
         return null;
+    }
+
+    @Override
+    public boolean findCustomerByUsername(String username) {
+        return false;
+    }
+
+    @Override
+    public boolean findCustomerByPassword(String password) {
+        return false;
+    }
+
+    @Override
+    public CustomerDTO findCustomerByUsernameAndPassword(String username, String password) {
+        return null;
+    }
+
+    @Override
+    public String generateCustomerId() {
+        return null;
+    }
+
+    @Override
+    public void updateCustomerStatus(String id) {
+
+    }
+
+    @Override
+    public List<CustomerDTO> getAllPendingCustomers() {
+        return null;
+    }
+
+    @Override
+    public List<CustomerDTO> getAllAcceptedCustomers() {
+        return null;
+    }
+
+    @Override
+    public void uploadCustomerImages(String nicfPath, String nicbPath, String licenceImgPath, String id) {
+
+    }
+
+    @Override
+    public int getCountOfCustomersRegistered() {
+        return 0;
     }
 }
