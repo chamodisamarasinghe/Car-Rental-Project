@@ -6,10 +6,15 @@ import java.util.List;
 
 public interface CustomerService {
     void saveCustomer(CustomerDTO dto);
-    void deleteCustomer(String id);
+
     void updateCustomer(CustomerDTO dto);
-    CustomerDTO searchCustomer(String id);
+
+    CustomerDTO searchCustomer(String customerId);
+
+    void deleteCustomer(String customerId);
+
     List<CustomerDTO> getAllCustomers();
+
     boolean findCustomerByUsername(String username);
 
     boolean findCustomerByPassword(String password);
