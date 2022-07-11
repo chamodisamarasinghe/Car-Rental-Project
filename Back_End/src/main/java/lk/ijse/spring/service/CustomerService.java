@@ -6,8 +6,25 @@ import java.util.List;
 
 public interface CustomerService {
     void saveCustomer(CustomerDTO dto);
-    void deleteCustomer(String NIC);
+    void deleteCustomer(String id);
     void updateCustomer(CustomerDTO dto);
-    CustomerDTO searchCustomer(String NIC);
+    CustomerDTO searchCustomer(String id);
     List<CustomerDTO> getAllCustomers();
+    boolean findCustomerByUsername(String username);
+
+    boolean findCustomerByPassword(String password);
+
+    CustomerDTO findCustomerByUsernameAndPassword(String username, String password);
+
+    String generateCustomerId();
+
+    void updateCustomerStatus(String id);
+
+    List<CustomerDTO> getAllPendingCustomers();
+
+    List<CustomerDTO> getAllAcceptedCustomers();
+
+    void uploadCustomerImages(String nicfPath, String nicbPath, String licenceImgPath, String id);
+
+    int getCountOfCustomersRegistered();
 }
