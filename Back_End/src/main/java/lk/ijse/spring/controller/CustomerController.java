@@ -35,14 +35,53 @@ public class CustomerController {
         return new ResponseUtil(200,"Updated",null);
     }
 
-    @DeleteMapping(params = {"NIC"},produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil deleteCustomer(@RequestParam String NIC) {
-        customerService.deleteCustomer(NIC);
+    @DeleteMapping(params = {"id"},produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil deleteCustomer(@RequestParam String id) {
+        customerService.deleteCustomer(id);
         return new ResponseUtil(200,"Deleted",null);
     }
 
-    @GetMapping(path = "/NIC}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil searchCustomer(@PathVariable String NIC) {
-        return new ResponseUtil(200,"Ok",customerService.searchCustomer(NIC));
+    @GetMapping(path = "/id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil searchCustomer(@PathVariable String id) {
+        return new ResponseUtil(200,"Ok",customerService.searchCustomer(id));
+    }
+
+
+    @GetMapping(path = "/{username}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil searchCustomerByUsernameAndPassword(@PathVariable String username, @PathVariable String password) {
+        if (customerService.findCustomerByUsername(username)) {
+            if (customerService.findCustomerByPassword(password)) {
+                return new ResponseUtil(200, "Login Successful", null);
+            } else {
+                return new ResponseUtil(404, "Incorrect Password", null);
+            }
+        } else {
+            return new ResponseUtil(404, "Incorrect Username", null);
+        }
+    }
+
+
+    @GetMapping(path = "/generateCustomerId", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil generateCustomerId() {
+        return new ResponseUtil(200, "Ok", customerService.generateCustomerId());
+    }
+
+
+    @PutMapping(path = "/updateStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil updateCustomerStatus(@PathVariable String id) {
+        customerService.updateCustomerStatus(id);
+        return new ResponseUtil(200, "Updated Status", null);
+    }
+
+    @GetMapping(path = "/accepted", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getAllAcceptedCustomers() {
+        return new ResponseUtil(200, "Ok", customerService.getAllAcceptedCustomers());
+    }
+
+
+
+    @GetMapping(path = "/count",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getCountOfRegisteredCustomers(){
+        return new ResponseUtil(200,"Ok",customerService.getCountOfCustomersRegistered());
     }
 }
