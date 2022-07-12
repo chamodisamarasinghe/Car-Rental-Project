@@ -6,8 +6,20 @@ import java.util.List;
 
 public interface CarService {
     void saveCar(CarDTO dto);
-    void deleteCar(String vehicleNum);
+
     void updateCar(CarDTO dto);
-    CarDTO searchCar(String vehicleNum);
-    List<CarDTO> getAllCar();
+
+    void deleteCar(String registrationNO);
+
+    List<CarDTO> getAllCars();
+
+    CarDTO searchCar(String registrationNO);
+
+    void updateCarStatus(String registrationNO, String status);
+
+    void updateCarFilePaths(String frontImg, String backImg, String interImg, String sideImg, String registrationID);
+
+    List<CarDTO> getAllCarsByStatus(String status);
+
+    int getCountOfCarsByStatus(String status);
 }
