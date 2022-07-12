@@ -92,7 +92,7 @@ public class CustomerController {
     @PutMapping(path = "/up/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil uploadImagesAndPath(@RequestPart("nicf") MultipartFile nicf, @RequestPart("nicb") MultipartFile nicb, @RequestPart("licenceImg") MultipartFile licenceImg, @PathVariable String id) {
         try {
-            String projectPath = String.valueOf(new File("/media/prageeth/Disk D/ProjectFiles/Easy_Car_Rent"));
+            String projectPath = String.valueOf(new File("H:/GDSE58/2nd Sem Final Project/Back_End/src/main/resources/static/images"));
             File uploadsDir = new File(projectPath + "/Customers");
             uploadsDir.mkdir();
             nicf.transferTo(new File(uploadsDir.getAbsolutePath() + "/" + nicf.getOriginalFilename()));
