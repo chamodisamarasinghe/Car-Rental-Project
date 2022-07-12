@@ -25,7 +25,7 @@ public class CarRent {
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "NIC", referencedColumnName = "customerId", nullable = false)
+    @JoinColumn(name = "customerId", referencedColumnName = "customerId", nullable = false)
     private Customer customer;
 
     @ManyToOne

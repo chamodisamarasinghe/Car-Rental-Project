@@ -2,8 +2,13 @@ package lk.ijse.spring.service.impl;
 
 import lk.ijse.spring.dto.CarDTO;
 import lk.ijse.spring.dto.CustomerDTO;
+import lk.ijse.spring.entity.Car;
+import lk.ijse.spring.repo.CarRepo;
 import lk.ijse.spring.service.CarService;
 import lk.ijse.spring.service.CustomerService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -14,28 +19,76 @@ import java.util.List;
 public class CarServiceImpl  implements CarService {
 
 
+    @Autowired
+    CarRepo repo;
+
+    @Autowired
+    ModelMapper mapper;
+
     @Override
     public void saveCar(CarDTO dto) {
-
-    }
-
-    @Override
-    public void deleteCar(String vehicleNum) {
-
+        if (!repo.existsById(dto.getRegistrationNO())) {
+            repo.save(mapper.map(dto, Car.class));
+        } else {
+            throw new RuntimeException("Car Already Exists");
+        }
     }
 
     @Override
     public void updateCar(CarDTO dto) {
-
+        if (repo.existsById(dto.getRegistrationNO())) {
+            repo.save(mapper.map(dto, Car.class));
+        } else {
+            throw new RuntimeException("No Such Car To Update");
+        }
     }
 
     @Override
-    public CarDTO searchCar(String vehicleNum) {
-        return null;
+    public void deleteCar(String registrationNO) {
+        if (repo.existsById(registrationNO)) {
+            repo.deleteById(registrationNO);
+        } else {
+            throw new RuntimeException("No Such Car To Delete");
+        }
     }
 
     @Override
-    public List<CarDTO> getAllCar() {
-        return null;
+    public List<CarDTO> getAllCars() {
+        return mapper.map(repo.findAll(), new TypeToken<List<CarDTO>>() {
+        }.getType());
+    }
+
+    @Override
+    public CarDTO searchCar(String registrationNO) {
+        return mapper.map(repo.findById(registrationNO).get(), CarDTO.class);
+    }
+
+    @Override
+    public void updateCarStatus(String registrationNO, String status) {
+        if (repo.existsById(registrationNO)) {
+            repo.updateCarStatus(status, registrationNO);
+        } else {
+            throw new RuntimeException("No Such Car To Update");
+        }
+    }
+
+    @Override
+    public void updateCarFilePaths(String frontImg, String backImg, String interImg, String sideImg, String registrationID) {
+        if (repo.existsById(registrationID)) {
+            repo.updateCarFilePaths(frontImg, backImg, interImg, sideImg, registrationID);
+        } else {
+            throw new RuntimeException("No Such Car To Update");
+        }
+    }
+
+    @Override
+    public List<CarDTO> getAllCarsByStatus(String status) {
+        return mapper.map(repo.getAllCarsByStatus(status), new TypeToken<List<CarDTO>>() {
+        }.getType());
+    }
+
+    @Override
+    public int getCountOfCarsByStatus(String status) {
+        return repo.getCountOfCarsByStatus(status);
     }
 }
