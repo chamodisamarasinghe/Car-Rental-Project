@@ -1,53 +1,59 @@
 package lk.ijse.spring.controller;
 
+import lk.ijse.spring.dto.CustomerDTO;
 import lk.ijse.spring.dto.DriverDTO;
+import lk.ijse.spring.service.CustomerService;
 import lk.ijse.spring.service.DriverService;
 import lk.ijse.spring.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("api/v1/driver")
 @CrossOrigin
 public class DriverController {
     @Autowired
-    DriverService service;
+    CustomerService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil getAllDrivers() {
-        return new ResponseUtil(200, "Ok", service.getAllDrivers());
+    public ResponseUtil getAllCustomers() {
+        return new ResponseUtil(200, "Ok", service.getAllCustomers());
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil saveDriver(DriverDTO dto) {
-        service.saveDriver(dto);
+    public ResponseUtil saveCustomer(CustomerDTO dto) {
+        service.saveCustomer(dto);
         return new ResponseUtil(200, "Saved", null);
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil updateCustomer(@RequestBody DriverDTO dto) {
-        service.updateDriver(dto);
+    public ResponseUtil updateCustomer(@RequestBody CustomerDTO dto) {
+        service.updateCustomer(dto);
         return new ResponseUtil(200, "Updated", null);
     }
 
-    @DeleteMapping(params = {"licenceNo"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil deleteDriver(@RequestParam String licenceNo) {
-        service.deleteDriver(licenceNo);
+    @DeleteMapping(params = {"id"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil deleteCustomer(@RequestParam String id) {
+        service.deleteCustomer(id);
         return new ResponseUtil(200, "Deleted", null);
     }
 
-    @GetMapping(path = "/{licenceNo}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil searchDriver(@PathVariable String licenceNo) {
-        return new ResponseUtil(200, "Ok", service.searchDriver(licenceNo));
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil searchCustomer(@PathVariable String id) {
+        return new ResponseUtil(200, "Ok", service.searchCustomer(id));
     }
 
     @GetMapping(path = "/{username}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil searchDriverByUsernameAndPassword(@PathVariable String username, @PathVariable String password) {
-        if (service.findDriverByUsername(username)) {
-            if (service.findDriverByPassword(password)) {
+    public ResponseUtil searchCustomerByUsernameAndPassword(@PathVariable String username, @PathVariable String password) {
+        if (service.findCustomerByUsername(username)) {
+            if (service.findCustomerByPassword(password)) {
                 return new ResponseUtil(200, "Login Successful", null);
             } else {
                 return new ResponseUtil(404, "Incorrect Password", null);
@@ -58,34 +64,57 @@ public class DriverController {
     }
 
     @GetMapping(path = "/set/{username}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil findDriverByUsernameAndPassword(@PathVariable String username, @PathVariable String password) {
-        return new ResponseUtil(200, "Ok", service.findDriverByUsernameAndPassword(username, password));
+    public ResponseUtil findCustomerByUsernameAndPassword(@PathVariable String username, @PathVariable String password) {
+        return new ResponseUtil(200, "Ok", service.findCustomerByUsernameAndPassword(username, password));
     }
 
-    @PutMapping(path = "/updateAvailable/{licenceNo}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil updateDriverAvailable(@PathVariable String licenceNo){
-        service.updateDriverAvailable(licenceNo);
-        return new ResponseUtil(200,"Updated",null);
+    @PutMapping(path = "/updateStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil updateCustomerStatus(@PathVariable String id) {
+        service.updateCustomerStatus(id);
+        return new ResponseUtil(200, "Updated Status", null);
     }
 
-    @PutMapping(path = "/updateNonAvailable/{licenceNo}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil updateDriverNonAvailable(@PathVariable String licenceNo){
-        service.updateDriverNonAvailable(licenceNo);
-        return new ResponseUtil(200,"Ok",null);
+    @GetMapping(path = "/pending", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getAllPendingCustomers() {
+        return new ResponseUtil(200, "Ok", service.getAllPendingCustomers());
     }
 
-    @GetMapping(path = "/getAllAvailableDrivers",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil getAllAvailableDrivers(){
-        return new ResponseUtil(200,"Ok",service.getAllAvailableDrivers());
+    @GetMapping(path = "/accepted", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getAllAcceptedCustomers() {
+        return new ResponseUtil(200, "Ok", service.getAllAcceptedCustomers());
     }
 
-    @GetMapping(path = "/getAllNonAvailableDrivers",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil getAllNonAvailableDrivers(){
-        return new ResponseUtil(200,"Ok",service.getAllNonAvailableDrivers());
+    @PutMapping(path = "/up/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil uploadImagesAndPath(@RequestPart("nicf") MultipartFile nicf, @RequestPart("nicb") MultipartFile nicb, @RequestPart("licenceImg") MultipartFile licenceImg, @PathVariable String id) {
+        try {
+            String projectPath = String.valueOf(new File("D:/Project Zone/2nd Sem/Easy Car Rental/BackEnd/src/main/resources/static/images"));
+            File uploadsDir = new File(projectPath + "/Customers");
+            uploadsDir.mkdir();
+            nicf.transferTo(new File(uploadsDir.getAbsolutePath() + "/" + nicf.getOriginalFilename()));
+            nicb.transferTo(new File(uploadsDir.getAbsolutePath() + "/" + nicb.getOriginalFilename()));
+            licenceImg.transferTo(new File(uploadsDir.getAbsolutePath() + "/" + licenceImg.getOriginalFilename()));
+
+            String nicfPath = projectPath + "/Customers/" + nicf.getOriginalFilename();
+            String nicbPath = projectPath + "/Customers/" + nicb.getOriginalFilename();
+            String licenceImgPath = projectPath + "/Customers/" + licenceImg.getOriginalFilename();
+
+            service.uploadCustomerImages(nicfPath, nicbPath, licenceImgPath, id);
+
+            return new ResponseUtil(200, "Uploaded", null);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new ResponseUtil(500, "Error", null);
+        }
     }
 
-    @GetMapping(path = "/count/{availability}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil getCountOfCustomersByAvailability(@PathVariable boolean availability){
-        return new ResponseUtil(200,"Ok",service.getCountOfDriversByStatus(availability));
+    @GetMapping(path = "/count",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil getCountOfRegisteredCustomers(){
+        return new ResponseUtil(200,"Ok",service.getCountOfCustomersRegistered());
+    }
+
+    @GetMapping(path = "/generateCustomerId", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil generateCustomerId() {
+        return new ResponseUtil(200, "Ok", service.generateCustomerId());
     }
 }

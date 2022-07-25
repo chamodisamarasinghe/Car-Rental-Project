@@ -5,10 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +16,8 @@ import java.util.List;
 @ToString
 public class Car {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String registrationNO;
     private String brand;
     private String type;
@@ -37,11 +36,8 @@ public class Car {
     private double lossDamageWaiver;
     private double priceForExtraKm;
     private double completeKm;
-    private final String status = "Available";
+    private Boolean isAvailable = false;
 
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-    private List<CarRent> rentals = new ArrayList<>();
-
-    @OneToMany(mappedBy = "car", cascade = CascadeType.ALL)
-    private List<Maintenance> maintenances = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    private Payment payment;
 }

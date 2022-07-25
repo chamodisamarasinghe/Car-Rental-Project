@@ -15,15 +15,15 @@ import java.time.LocalDate;
 @Entity
 public class Payment {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String paymentId;
-    private LocalDate date;
-    private String accountNo;
-    private String accountHolderName;
-    private String bankName;
-    private String branchName;
-    private double amount;
+    private String paymentType;//CARD,CASH
+    private Double fullPayment;
+    private Boolean isPay = false;
+    private Double lossDamageWaiver;
+    private Double rentalFee;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rentID", referencedColumnName = "rentID",nullable = false)
-    private CarRent rental;
+    private Customer customer;
+
 }

@@ -4,12 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-import org.hibernate.annotations.ForeignKey;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,16 +16,21 @@ import java.util.List;
 @ToString
 public class Driver {
     @Id
-    private String licenceNo;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private String did;
     private String name;
     private String address;
-    private int contactNo;
+    private String contactNo;
     private String nicNo;
+    private String licenseNo;
     private String username;
     private String password;
-    private final boolean availability = true;
+    private final boolean isAvailable=false;
 
-    @OneToMany(mappedBy = "driver",cascade = CascadeType.ALL)
-    private List<CarRent> rentals = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.ALL)
+    private Car car;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private DriverSchedule schedule;
 
 }

@@ -20,36 +20,36 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public void saveDriver(DriverDTO dto) {
-        if (!repo.existsById(dto.getLicenceNo())){
-            repo.save(mapper.map(dto, Driver.class));
-        }else {
+        if (!repo.existsById(dto.getDid())) {
+            repo.save(mapper.map(dto,Driver.class));
+        } else {
             throw new RuntimeException("Driver Already Exists");
         }
     }
 
     @Override
     public void updateDriver(DriverDTO dto) {
-        if (repo.existsById(dto.getLicenceNo())){
-            repo.save(mapper.map(dto,Driver.class));
-        }else {
+        if (repo.existsById(dto.getDid())) {
+            repo.save(mapper.map(dto, Driver.class));
+        } else {
             throw new RuntimeException("No Such Driver To Update");
         }
     }
 
     @Override
     public void deleteDriver(String licenceNo) {
-        if (repo.existsById(licenceNo)){
+        if (repo.existsById(licenceNo)) {
             repo.deleteById(licenceNo);
-        }else {
+        } else {
             throw new RuntimeException("No Such Driver To Delete");
         }
     }
 
     @Override
     public DriverDTO searchDriver(String licenceNo) {
-        if (repo.existsById(licenceNo)){
-            return mapper.map(repo.findById(licenceNo).get(),DriverDTO.class);
-        }else {
+        if (repo.existsById(licenceNo)) {
+            return mapper.map(repo.findById(licenceNo).get(), DriverDTO.class);
+        } else {
             throw new RuntimeException("Driver Not Found...");
         }
     }
@@ -72,23 +72,23 @@ public class DriverServiceImpl implements DriverService {
 
     @Override
     public DriverDTO findDriverByUsernameAndPassword(String username, String password) {
-        return mapper.map(repo.findDriverByUsernameAndPassword(username, password).get(),DriverDTO.class);
+        return mapper.map(repo.findDriverByUsernameAndPassword(username, password).get(), DriverDTO.class);
     }
 
     @Override
     public void updateDriverNonAvailable(String licenceNo) {
-        if (repo.existsById(licenceNo)){
+        if (repo.existsById(licenceNo)) {
             repo.updateDriverNonAvailable(licenceNo);
-        }else {
+        } else {
             throw new RuntimeException("Driver Not Found...");
         }
     }
 
     @Override
     public void updateDriverAvailable(String licenceNo) {
-        if (repo.existsById(licenceNo)){
+        if (repo.existsById(licenceNo)) {
             repo.updateDriverAvailable(licenceNo);
-        }else {
+        } else {
             throw new RuntimeException("Driver Not Found...");
         }
     }

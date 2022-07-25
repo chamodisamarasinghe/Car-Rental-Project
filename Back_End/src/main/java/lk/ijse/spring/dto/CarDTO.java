@@ -10,6 +10,7 @@ import lombok.ToString;
 @Data
 @ToString
 public class CarDTO {
+    private long id;
     private String registrationNO;
     private String brand;
     private String type;
@@ -17,10 +18,10 @@ public class CarDTO {
     private String transmissionType;
     private String fuelType;
     private String color;
-    private String frontView;
-    private String backView;
-    private String sideView;
-    private String internalView;
+    private String frontViewImg;
+    private String backViewImg;
+    private String sideViewImg;
+    private String internalViewImg;
     private double dailyRate;
     private double monthlyRate;
     private double freeKmForPrice;
@@ -28,5 +29,5 @@ public class CarDTO {
     private double lossDamageWaiver;
     private double priceForExtraKm;
     private double completeKm;
-    private final String status="Available";
+    private Boolean isAvailable = false;
 }

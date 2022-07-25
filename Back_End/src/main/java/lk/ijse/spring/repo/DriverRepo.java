@@ -5,8 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +18,7 @@ public interface DriverRepo extends JpaRepository<Driver, String> {
     Optional<Driver> findDriverByUsernameAndPassword(String username, String password);
 
     @Modifying
-    @Transactional
+    @org.springframework.transaction.annotation.Transactional
     @Query(value = "UPDATE Driver SET availability = false WHERE licenceNo=:licenceNo", nativeQuery = true)
     void updateDriverNonAvailable(@Param("licenceNo") String licenceNo);
 
@@ -27,12 +27,12 @@ public interface DriverRepo extends JpaRepository<Driver, String> {
     @Query(value = "UPDATE Driver SET availability = true WHERE licenceNo=:licenceNo", nativeQuery = true)
     void updateDriverAvailable(@Param("licenceNo") String licenceNo);
 
-    @Query(value = "SELECT * FROM Driver WHERE availability=true",nativeQuery = true)
+    @Query(value = "SELECT * FROM Driver WHERE availability=true", nativeQuery = true)
     List<Driver> getAllAvailableDrivers();
 
-    @Query(value = "SELECT * FROM Driver WHERE availability=false",nativeQuery = true)
+    @Query(value = "SELECT * FROM Driver WHERE availability=false", nativeQuery = true)
     List<Driver> getAllNonAvailableDrivers();
 
-    @Query(value = "SELECT COUNT(licenceNo) FROM Driver WHERE availability=:availability",nativeQuery = true)
+    @Query(value = "SELECT COUNT(licenceNo) FROM Driver WHERE availability=:availability", nativeQuery = true)
     int getCountOfDriversByStatus(@Param("availability") boolean availability);
 }

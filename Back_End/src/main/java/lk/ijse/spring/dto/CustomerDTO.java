@@ -16,11 +16,12 @@ public class CustomerDTO {
     private int contactNo;
     private String email;
     private String nicNo;
-    private String nicFrontImg;
-    private String nicBackImg;
+    private String nicImg;
     private String licenceNo;
     private String licenceImg;
     private String username;
     private String password;
-    private final String status = "Pending";
+    private Boolean isRegistered=false;
+    private Boolean isDriverRequested=false;
+    private Boolean isAccept;
 }

@@ -10,12 +10,13 @@ import lombok.ToString;
 @Data
 @ToString
 public class DriverDTO {
-    private String licenceNo;
+    private String did;
     private String name;
     private String address;
-    private int contactNo;
+    private String contactNo;
     private String nicNo;
+    private String licenseNo;
     private String username;
     private String password;
-    private final boolean availability = true;
+    private final boolean isAvailable=false;
 }

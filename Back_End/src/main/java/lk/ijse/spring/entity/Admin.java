@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @AllArgsConstructor
@@ -15,11 +17,8 @@ import javax.persistence.Id;
 @ToString
 public class Admin {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String adminId;
-    private String name;
-    private String address;
-    private String contact;
-    private String email;
     private String username;
     private String password;
 }

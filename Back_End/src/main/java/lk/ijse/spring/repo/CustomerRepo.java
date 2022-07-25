@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +23,7 @@ public interface CustomerRepo extends JpaRepository<Customer, String> {
     @Modifying
     @Transactional
     @Query(value = "UPDATE Customer SET status='Accepted' WHERE customerId=:customerId", nativeQuery = true)
-    void updateCustomerStatus(@Param("id") String customerId);
+    void updateCustomerStatus(@Param("customerId") String customerId);
 
     @Query(value = "SELECT * FROM Customer WHERE status='Pending'", nativeQuery = true)
     List<Customer> findPendingCustomers();

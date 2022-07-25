@@ -17,7 +17,6 @@ import java.io.IOException;
 @CrossOrigin
 public class CustomerController {
 
-
     @Autowired
     CustomerService service;
 
@@ -68,11 +67,6 @@ public class CustomerController {
         return new ResponseUtil(200, "Ok", service.findCustomerByUsernameAndPassword(username, password));
     }
 
-    @GetMapping(path = "/generateCustomerId", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil generateCustomerId() {
-        return new ResponseUtil(200, "Ok", service.generateCustomerId());
-    }
-
     @PutMapping(path = "/updateStatus/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil updateCustomerStatus(@PathVariable String id) {
         service.updateCustomerStatus(id);
@@ -92,7 +86,7 @@ public class CustomerController {
     @PutMapping(path = "/up/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil uploadImagesAndPath(@RequestPart("nicf") MultipartFile nicf, @RequestPart("nicb") MultipartFile nicb, @RequestPart("licenceImg") MultipartFile licenceImg, @PathVariable String id) {
         try {
-            String projectPath = String.valueOf(new File("H:/GDSE58/2nd Sem Final Project/Back_End/src/main/resources/static/images"));
+            String projectPath = String.valueOf(new File("D:/Project Zone/2nd Sem/Easy Car Rental/BackEnd/src/main/resources/static/images"));
             File uploadsDir = new File(projectPath + "/Customers");
             uploadsDir.mkdir();
             nicf.transferTo(new File(uploadsDir.getAbsolutePath() + "/" + nicf.getOriginalFilename()));
@@ -116,5 +110,10 @@ public class CustomerController {
     @GetMapping(path = "/count",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil getCountOfRegisteredCustomers(){
         return new ResponseUtil(200,"Ok",service.getCountOfCustomersRegistered());
+    }
+
+    @GetMapping(path = "/generateCustomerId", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil generateCustomerId() {
+        return new ResponseUtil(200, "Ok", service.generateCustomerId());
     }
 }
