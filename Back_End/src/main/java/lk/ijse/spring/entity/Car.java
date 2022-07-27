@@ -6,18 +6,20 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
 @ToString
+@Entity
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "idcar", unique = true, nullable = false)
+    private Long idCar;
     private String registrationNO;
     private String brand;
     private String type;
@@ -29,14 +31,15 @@ public class Car {
     private String backViewImg;
     private String sideViewImg;
     private String internalViewImg;
-    private double dailyRate;
-    private double monthlyRate;
-    private double freeKmForPrice;
-    private double freeKmForDuration;
-    private double lossDamageWaiver;
-    private double priceForExtraKm;
-    private double completeKm;
+    private BigDecimal dailyRate;
+    private BigDecimal monthlyRate;
+    private BigDecimal freeKmForPrice;
+    private BigDecimal freeKmForDuration;
+    private BigDecimal lossDamageWaiver;
+    private BigDecimal priceForExtraKm;
+    private BigDecimal completeKm;
     private Boolean isAvailable = false;
+
 
     @OneToOne(cascade = CascadeType.ALL)
     private Payment payment;

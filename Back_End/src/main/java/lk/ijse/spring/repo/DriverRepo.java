@@ -17,15 +17,23 @@ public interface DriverRepo extends JpaRepository<Driver, String> {
 
     Optional<Driver> findDriverByUsernameAndPassword(String username, String password);
 
-    @Modifying
-    @org.springframework.transaction.annotation.Transactional
-    @Query(value = "UPDATE Driver SET availability = false WHERE licenceNo=:licenceNo", nativeQuery = true)
-    void updateDriverNonAvailable(@Param("licenceNo") String licenceNo);
+
+    boolean existsByLicenseNo(String licenseNo );
 
     @Modifying
     @Transactional
-    @Query(value = "UPDATE Driver SET availability = true WHERE licenceNo=:licenceNo", nativeQuery = true)
-    void updateDriverAvailable(@Param("licenceNo") String licenceNo);
+    @Query("delete from Driver d where d.licenseNo = ?1")
+    void deleteByLicenseNo(String firstName);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Driver SET availability = false WHERE licenseNo =:licenseNo ", nativeQuery = true)
+    void updateDriverNonAvailable(@Param("licenseNo ") String licenseNo );
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Driver SET availability = true WHERE licenseNo =:licenseNo ", nativeQuery = true)
+    void updateDriverAvailable(@Param("licenseNo ") String licenseNo );
 
     @Query(value = "SELECT * FROM Driver WHERE availability=true", nativeQuery = true)
     List<Driver> getAllAvailableDrivers();

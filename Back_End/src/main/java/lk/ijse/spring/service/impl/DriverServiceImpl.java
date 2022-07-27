@@ -7,9 +7,13 @@ import lk.ijse.spring.service.DriverService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
+@Transactional
 public class DriverServiceImpl implements DriverService {
     @Autowired
     DriverRepo repo;
@@ -37,18 +41,18 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public void deleteDriver(String licenceNo) {
-        if (repo.existsById(licenceNo)) {
-            repo.deleteById(licenceNo);
+    public void deleteDriver(String licenseNo ) {
+        if (repo.existsByLicenseNo(licenseNo )) {
+            repo.deleteByLicenseNo(licenseNo );
         } else {
             throw new RuntimeException("No Such Driver To Delete");
         }
     }
 
     @Override
-    public DriverDTO searchDriver(String licenceNo) {
-        if (repo.existsById(licenceNo)) {
-            return mapper.map(repo.findById(licenceNo).get(), DriverDTO.class);
+    public DriverDTO searchDriver(String licenseNo ) {
+        if (repo.existsById(licenseNo )) {
+            return mapper.map(repo.findById(licenseNo ).get(), DriverDTO.class);
         } else {
             throw new RuntimeException("Driver Not Found...");
         }
@@ -76,9 +80,9 @@ public class DriverServiceImpl implements DriverService {
     }
 
     @Override
-    public void updateDriverNonAvailable(String licenceNo) {
-        if (repo.existsById(licenceNo)) {
-            repo.updateDriverNonAvailable(licenceNo);
+    public void updateDriverNonAvailable(String licenseNo ) {
+        if (repo.existsById(licenseNo )) {
+            repo.updateDriverNonAvailable(licenseNo );
         } else {
             throw new RuntimeException("Driver Not Found...");
         }

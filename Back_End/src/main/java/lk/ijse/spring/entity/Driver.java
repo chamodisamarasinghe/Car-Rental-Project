@@ -12,8 +12,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
 @ToString
+@Entity
 public class Driver {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,5 +32,4 @@ public class Driver {
 
     @OneToOne(cascade = CascadeType.ALL)
     private DriverSchedule schedule;
-
 }

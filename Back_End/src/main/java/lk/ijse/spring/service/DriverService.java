@@ -9,9 +9,9 @@ public interface DriverService {
 
     void updateDriver(DriverDTO dto);
 
-    void deleteDriver(String licenceNo);
+    void deleteDriver(String licenseNo );
 
-    DriverDTO searchDriver(String licenceNo);
+    DriverDTO searchDriver(String licenseNo );
 
     List<DriverDTO> getAllDrivers();
 
@@ -21,9 +21,9 @@ public interface DriverService {
 
     DriverDTO findDriverByUsernameAndPassword(String username, String password);
 
-    void updateDriverNonAvailable(String licenceNo);
+    void updateDriverNonAvailable(String licenseNo );
 
-    void updateDriverAvailable(String licenceNo);
+    void updateDriverAvailable(String licenseNo );
 
     List<DriverDTO> getAllAvailableDrivers();
 

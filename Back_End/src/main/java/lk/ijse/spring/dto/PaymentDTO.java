@@ -5,7 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -13,8 +15,8 @@ import java.time.LocalDate;
 public class PaymentDTO {
     private String paymentId;
     private String paymentType;//CARD,CASH
-    private Double fullPayment;
+    private BigDecimal fullPayment;
     private Boolean isPay=false;
-    private Double lossDamageWaiver;
-    private Double rentalFee;
+    private BigDecimal lossDamageWaiver;
+    private BigDecimal rentalFee;
 }

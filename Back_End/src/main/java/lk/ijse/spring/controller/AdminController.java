@@ -1,9 +1,7 @@
 package lk.ijse.spring.controller;
 
 import lk.ijse.spring.dto.AdminDTO;
-import lk.ijse.spring.dto.CustomerDTO;
 import lk.ijse.spring.service.AdminService;
-import lk.ijse.spring.service.CustomerService;
 import lk.ijse.spring.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("api/v1/admin")
 @CrossOrigin
 public class AdminController {
-
     @Autowired
     AdminService service;
 

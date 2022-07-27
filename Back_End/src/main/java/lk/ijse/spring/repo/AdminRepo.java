@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;
 
-public interface AdminRepo extends JpaRepository<Admin, String> {
+public interface AdminRepo extends JpaRepository<Admin,String> {
     Optional<Admin> findAdminByUsername(String username);
     Optional<Admin> findAdminByPassword(String password);
 

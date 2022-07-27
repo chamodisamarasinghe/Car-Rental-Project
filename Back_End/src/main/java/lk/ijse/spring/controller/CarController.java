@@ -3,7 +3,6 @@ package lk.ijse.spring.controller;
 import lk.ijse.spring.dto.CarDTO;
 import lk.ijse.spring.dto.CustomerDTO;
 import lk.ijse.spring.service.CarService;
-import lk.ijse.spring.service.CustomerService;
 import lk.ijse.spring.util.ResponseUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 @RestController
-@RequestMapping("api/v1/car")
+@RequestMapping("api/v1/admin/car")
 @CrossOrigin
 public class CarController {
     @Autowired
@@ -39,22 +38,22 @@ public class CarController {
         return new ResponseUtil(200, "Updated", null);
     }
 
-    @DeleteMapping(params = {"id"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil deleteCar(@RequestParam  long id) {
-        service.deleteCar(id);
+    @DeleteMapping(params = {"registrationNO"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil deleteCar(@RequestParam  String registrationNO) {
+        service.deleteCar(registrationNO);
         return new ResponseUtil(200, "deleted", null);
     }
 
-    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil searchCar(@PathVariable  long id) {
-        return new ResponseUtil(200, "Ok", service.searchCar(id));
+    @GetMapping(path = "/{registrationNO}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil searchCar(@PathVariable  String registrationNO) {
+        return new ResponseUtil(200, "Ok", service.searchCar(registrationNO));
     }
 
-    @PutMapping(path = "/updateCarStatus/{id}/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil updateCarStatus(@PathVariable long id, @PathVariable String status) {
-        service.updateCarStatus(id, status);
-        return new ResponseUtil(200, "Ok", null);
-    }
+//    @PutMapping(path = "/{registrationNO}", produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseUtil updateCar(@PathVariable String registrationNO) {
+//        service.updateCar(registrationNO);
+//        return new ResponseUtil(200, "Ok", null);
+//    }
 
     @GetMapping(path = "/getByStatus/{status}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil getAllCarsByStatus(@PathVariable String status) {
@@ -82,7 +81,7 @@ public class CarController {
             String interImgPath = projectPath + "/Cars/" + interImg.getOriginalFilename();
             String sideImgPath = projectPath + "/Cars/" + sideImg.getOriginalFilename();
 
-            service.updateCarFilePaths(frontImgPath, backImgPath, interImgPath, sideImgPath, id);
+//            service.updateCarFilePaths(frontImgPath, backImgPath, interImgPath, sideImgPath, id);
 
             return new ResponseUtil(200, "Uploaded", null);
 

@@ -1,12 +1,12 @@
 package lk.ijse.spring.entity;
 
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,5 +25,6 @@ public class Payment {
 
     @OneToOne(cascade = CascadeType.ALL)
     private Customer customer;
+
 
 }
