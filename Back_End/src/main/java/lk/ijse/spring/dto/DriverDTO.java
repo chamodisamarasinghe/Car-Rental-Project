@@ -15,7 +15,6 @@ public class DriverDTO {
     private String address;
     private String contactNo;
     private String nicNo;
-    private String licenseNo;
     private String username;
     private String password;
     private final boolean isAvailable=false;

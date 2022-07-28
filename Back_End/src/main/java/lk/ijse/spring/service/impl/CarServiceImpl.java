@@ -25,7 +25,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void saveCar(CarDTO dto) {
-        if (!repo.existsById(dto.getId())) {
+        if (!repo.existsByRegistrationNO(dto.getRegistrationNO())) {
             repo.save(mapper.map(dto, Car.class));
         } else {
             throw new RuntimeException("Car Already Exists");
@@ -34,7 +34,7 @@ public class CarServiceImpl implements CarService {
 
     @Override
     public void updateCar(CarDTO dto) {
-        if (repo.existsById(dto.getId())) {
+        if (repo.existsByRegistrationNO(dto.getRegistrationNO())) {
             repo.save(mapper.map(dto, Car.class));
         } else {
             throw new RuntimeException("No Such Car To Update");

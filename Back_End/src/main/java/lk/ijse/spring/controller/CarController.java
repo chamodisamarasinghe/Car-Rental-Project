@@ -28,20 +28,33 @@ public class CarController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil saveCar(@RequestBody CarDTO dto) {
-        service.saveCar(dto);
-        return new ResponseUtil(200, "Saved", null);
+        if (!(dto.getRegistrationNO().equals(""))){
+            service.saveCar(dto);
+            return new ResponseUtil(200, "Saved", null);
+        }else {
+            return new ResponseUtil(404, "NotSaved", null);
+        }
+
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil updateCar(@RequestBody CarDTO dto) {
-        service.updateCar(dto);
-        return new ResponseUtil(200, "Updated", null);
+        if (!(dto.getRegistrationNO().equals(""))){
+            service.updateCar(dto);
+            return new ResponseUtil(200, "Updated", null);
+        }else {
+            return new ResponseUtil(404, "NotUpdated", null);
+        }
     }
 
     @DeleteMapping(params = {"registrationNO"}, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil deleteCar(@RequestParam  String registrationNO) {
-        service.deleteCar(registrationNO);
-        return new ResponseUtil(200, "deleted", null);
+        if (!(registrationNO.equals(""))){
+            service.deleteCar(registrationNO);
+            return new ResponseUtil(200, "Deleted", null);
+        }else {
+            return new ResponseUtil(404, "NotDeleted", null);
+        }
     }
 
     @GetMapping(path = "/{registrationNO}", produces = MediaType.APPLICATION_JSON_VALUE)
