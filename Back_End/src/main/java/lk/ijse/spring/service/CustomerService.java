@@ -15,16 +15,6 @@ public interface CustomerService {
 
     List<CustomerDTO> getAllCustomers();
 
-    boolean findCustomerByUsername(String username);
-
-    boolean findCustomerByPassword(String password);
-
-    CustomerDTO findCustomerByUsernameAndPassword(String username, String password);
-
-    String generateCustomerId();
-
-    void updateCustomerStatus(String id);
-
     List<CustomerDTO> getAllPendingCustomers();
 
     List<CustomerDTO> getAllAcceptedCustomers();

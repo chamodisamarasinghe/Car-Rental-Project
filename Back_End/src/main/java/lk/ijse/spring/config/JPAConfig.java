@@ -1,5 +1,6 @@
 package lk.ijse.spring.config;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,6 +25,7 @@ import javax.sql.DataSource;
 @EnableTransactionManagement
 @PropertySource("classpath:application.properties")
 public class JPAConfig {
+
     @Autowired
     Environment env;
 
@@ -32,13 +34,13 @@ public class JPAConfig {
         LocalContainerEntityManagerFactoryBean bean = new LocalContainerEntityManagerFactoryBean();
         bean.setJpaVendorAdapter(va);
         bean.setDataSource(ds);
-        bean.setPackagesToScan(env.getRequiredProperty("entity.package.name")); // location of the entity
+        bean.setPackagesToScan(env.getRequiredProperty("entity.package.name"));
         return bean;
     }
 
     @Bean
     public DataSource dataSource() throws NamingException {
-        DriverManagerDataSource dataSource= new DriverManagerDataSource();
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setUrl(env.getRequiredProperty("my.app.url"));
         dataSource.setUsername(env.getRequiredProperty("my.app.username"));
         dataSource.setPassword(env.getRequiredProperty("my.app.password"));
@@ -60,4 +62,5 @@ public class JPAConfig {
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {
         return new JpaTransactionManager(emf);
     }
+
 }
