@@ -6,8 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -43,7 +43,7 @@ public class CarRentDetails {
     private Boolean isDriver = false;
 
     @ManyToOne
-    @JoinColumn(name = "customerId", referencedColumnName = "customerId", nullable = false)
+    @JoinColumn(name = "nicNo", referencedColumnName = "nicNo", nullable = false)
     private Customer customer;
 
     @ManyToOne
