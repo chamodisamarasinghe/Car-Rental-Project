@@ -7,11 +7,13 @@ import java.util.List;
 public interface CustomerService {
     void saveCustomer(CustomerDTO dto);
 
+    void changeCustomerStatus(String type,String nicNo);
+
     void updateCustomer(CustomerDTO dto);
 
-    CustomerDTO searchCustomer(String customerId);
+    CustomerDTO searchCustomer(String nicNo);
 
-    void deleteCustomer(String customerId);
+    void deleteCustomer(String nicNo);
 
     List<CustomerDTO> getAllCustomers();
 

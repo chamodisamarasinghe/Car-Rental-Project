@@ -46,19 +46,19 @@ public class CustomerController {
         }
     }
 
-    @DeleteMapping(params = {"customerId"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil deleteCustomer(@RequestParam String customerId) {
-        if (!(customerId.equals(""))){
-            service.deleteCustomer(customerId);
+    @DeleteMapping(params = {"nicNo"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil deleteCustomer(@RequestParam String nicNo) {
+        if (!(nicNo.equals(""))){
+            service.deleteCustomer(nicNo);
             return new ResponseUtil(200, "Deleted", null);
         }else {
             return new ResponseUtil(404, "NotDeleted", null);
         }
     }
 
-    @GetMapping(path = "/{customerId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseUtil searchCustomer(@PathVariable String customerId) {
-        return new ResponseUtil(200, "Ok", service.searchCustomer(customerId));
+    @GetMapping(params = {"nicNo"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseUtil searchCustomer(@PathVariable String nicNo) {
+        return new ResponseUtil(200, "Ok", service.searchCustomer(nicNo));
     }
 
     @GetMapping(path = "/{username}/{password}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -76,6 +76,8 @@ public class CustomerController {
     public ResponseUtil getAllAcceptedCustomers() {
         return new ResponseUtil(200, "Ok", service.getAllAcceptedCustomers());
     }
+
+
 
     @PutMapping(path = "/up/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseUtil uploadImagesAndPath(@RequestPart("nicf") MultipartFile nicf, @RequestPart("nicb") MultipartFile nicb, @RequestPart("licenceImg") MultipartFile licenceImg, @PathVariable String id) {

@@ -9,14 +9,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @Data
 @ToString
-public class DriverDTO {
-    private String did;
-    private String name;
-    private String address;
-    private String contactNo;
-    private String nicNo;
-    private String licenseNo;
+public class LoginDTO {
     private String username;
     private String password;
-    private final boolean isAvailable=false;
 }
